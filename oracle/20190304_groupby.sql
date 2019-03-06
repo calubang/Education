@@ -207,21 +207,19 @@ where
 select
     *
 from
-    employees emp
-    , (
+    (
         select 
             rownum as count
-            , employee_id
+            , emp.employee_id
             , salary
         from
-            employees
+            employees emp
         where
             rownum < 10
     ) empRownum
 where
-    emp.employee_id = emprownum.employee_id
-    and empRownum.count >= 5
-    ;
+    empRownum.count >= 5
+ ;
     
 -- 순위, 사번, 이름, 급여, 입사년대, 부서이름
 -- 급여순 순위(내림차순)
