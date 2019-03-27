@@ -29,19 +29,11 @@ public class ListTest extends Frame {
 		
 
 		int len = buttonStr.length;
-		//pCenter.setLayout(new GridLayout(len+6, 1, 10, 10));
-		GridBagLayout gbl = new GridBagLayout();
-		pCenter.setLayout(gbl);
-		//gbl.columnWeights = new double[]{1,1,1};
-		//gbl.rowWeights = new double[] {1, 1, 1, 1, 1, 1, 1, 1};
-		
-		
+		pCenter.setLayout(new GridLayout(len, 3, 10, 10));
+
 		for (int i = 0; i < len; i++) {
-			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.gridx = 1;
-			gbc.gridy = 2+i;
 			Button button = new Button(buttonStr[i]);
-			pCenter.add(button, gbc);
+			pCenter.add(button);
 		}
 		
 		//pr
