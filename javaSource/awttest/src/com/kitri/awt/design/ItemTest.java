@@ -1,6 +1,8 @@
 package com.kitri.awt.design;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ItemTest extends Frame{
 	
@@ -10,12 +12,10 @@ public class ItemTest extends Frame{
 	
 	//panel
 	Panel pN = new Panel();
-	Panel pC = new Panel();
 	Panel pS = new Panel();
 	
 	//pN
 	CheckboxGroup cbg1 = new CheckboxGroup();
-
 	
 	//pC
 	TextArea ta = new TextArea();
@@ -32,32 +32,37 @@ public class ItemTest extends Frame{
 		int len = mealTime.length;
 		for(int i = 0; i<len ; i++) {
 			pN.add(new Checkbox(mealTime[i], cbg1, false));
-		}
-		len = fruit.length;
-		for(int i = 0 ; i<len ; i++) {
-			pN.add(new Checkbox(fruit[i], false));
+			ch.add(mealTime[i]);
 		}
 		
-		//pC备己
-		pC.setLayout(new BorderLayout());
-		pC.add(ta, BorderLayout.CENTER);
+		len = fruit.length;
+		for(int i = 0 ; i<len ; i++) {
+			if(fruit[i].equals("荤苞")) 
+				pN.add(new Checkbox(fruit[i], true));
+			else
+				pN.add(new Checkbox(fruit[i], false));
+		}
 		
 		//pS备己
 		pS.setLayout(new BorderLayout());
-		len = mealTime.length;
-		for (int i = 0; i < len; i++) {
-			ch.add(mealTime[i]);
-		}
+		
 		pS.add(ch, BorderLayout.CENTER);
 		pS.add(bExit, BorderLayout.EAST);
 		
 		add(pN, BorderLayout.NORTH);
-		add(pC, BorderLayout.CENTER);
+		add(ta, BorderLayout.CENTER);
 		add(pS, BorderLayout.SOUTH);
 		
 		setBounds(300, 200, 300, 500);
 		this.setVisible(true);
 		
+		WindowAdapter wa = new WindowAdapter() {
+			public void 	windowClosing(WindowEvent e){
+				System.exit(0);
+			}
+		};
+		
+		addWindowListener(wa);
 	}
 	
 	public static void main(String[] args) {

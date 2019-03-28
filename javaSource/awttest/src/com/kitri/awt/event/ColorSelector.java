@@ -1,9 +1,9 @@
-package com.kitri.awt.design;
+package com.kitri.awt.event;
 
 import java.awt.*;
 import java.awt.event.*;
 
-public class ColorSelector extends Frame  {
+public class ColorSelector extends Frame implements AdjustmentListener {
 	
 	//선언부
 	String lStr[] = {"빨강", "초록", "파랑"};
@@ -32,6 +32,7 @@ public class ColorSelector extends Frame  {
 	Button bExit = new Button("확인");
 	
 	public ColorSelector() {
+		super("ColorSelector");	
 		//pw
 		lR.setBackground(Color.RED);
 		lR.setForeground(Color.WHITE);
@@ -71,12 +72,12 @@ public class ColorSelector extends Frame  {
 		setBounds(300, 200, 500, 500);
 		this.setVisible(true);
 		
-		int r = sbR.getValue();
-		int g = sbG.getValue();
-		int b = sbB.getValue();
+		changeColor();
 		
-		pColor.setBackground(new Color(r, g, b));
-		lColor.setText("R:" + r + "   G:" + g + "   B:" + b);
+		//event
+		sbR.addAdjustmentListener(this);
+		sbG.addAdjustmentListener(this);
+		sbB.addAdjustmentListener(this);
 		
 		WindowAdapter wa = new WindowAdapter() {
 			public void 	windowClosing(WindowEvent e){
@@ -89,5 +90,18 @@ public class ColorSelector extends Frame  {
 	
 	public static void main(String[] args) {
 		new ColorSelector();
+	}
+
+	@Override
+	public void adjustmentValueChanged(AdjustmentEvent e) {
+		changeColor();
+	}
+
+	private void changeColor() {
+		int r = sbR.getValue();
+		int g = sbG.getValue();
+		int b = sbB.getValue();
+		pColor.setBackground(new Color(r, g, b));
+		lColor.setText("R:" + r + "   G:" + g + "   B:" + b);
 	}
 }

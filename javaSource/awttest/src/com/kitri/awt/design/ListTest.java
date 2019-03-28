@@ -1,6 +1,8 @@
 package com.kitri.awt.design;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ListTest extends Frame {
 	
@@ -29,10 +31,14 @@ public class ListTest extends Frame {
 		
 
 		int len = buttonStr.length;
-		pCenter.setLayout(new GridLayout(len, 3, 10, 10));
-
+		pCenter.setLayout(new GridLayout(len+4, 1, 10, 10));
+		Font f = new Font("Verdana", Font.PLAIN, 15);
+		
+		pCenter.add(new Panel());
+		pCenter.add(new Panel());
 		for (int i = 0; i < len; i++) {
 			Button button = new Button(buttonStr[i]);
+			button.setFont(f);
 			pCenter.add(button);
 		}
 		
@@ -50,10 +56,17 @@ public class ListTest extends Frame {
 		add(pCenter);
 		add(pRight);
 		
-		
-		
 		setBounds(300, 200, 500, 500);
 		this.setVisible(true);
+	
+		WindowAdapter wa = new WindowAdapter() {
+			public void 	windowClosing(WindowEvent e){
+				System.exit(0);
+			}
+		};
+		
+		addWindowListener(wa);
+	
 	}
 	
 	public static void main(String[] args) {
