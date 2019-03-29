@@ -3,7 +3,7 @@ package com.kitri.awt.event;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ItemTest extends Frame implements ItemListener, ActionListener{
+public class ItemTest extends Frame {
 	
 	//선언부
 	String mealTime[] = {"아침", "점심", "저녁"};
@@ -24,6 +24,10 @@ public class ItemTest extends Frame implements ItemListener, ActionListener{
 	//ps
 	Choice ch = new Choice();
 	Button bExit = new Button("종료");
+	
+	//event
+	ItemLogic itemLogic;
+	
 	
 	//구성
 	public ItemTest() {
@@ -64,22 +68,24 @@ public class ItemTest extends Frame implements ItemListener, ActionListener{
 		setBounds(300, 200, 300, 500);
 		this.setVisible(true);
 		
+		itemLogic = new ItemLogic(this); 
+		
 		//event 등록
-		bExit.addActionListener(this);
+		bExit.addActionListener(itemLogic);
 		len = cbFruit.length;
 		for (int i = 0; i < len; i++) {
-			cbFruit[i].addItemListener(this);
+			cbFruit[i].addItemListener(itemLogic);
 		}
 		
 		len = cbMeal.length;
 		for (int i = 0; i < len; i++) {
-			cbMeal[i].addItemListener(this);
+			cbMeal[i].addItemListener(itemLogic);
 		}
 		len = cbFruit.length;
 		for (int i = 0; i < len; i++) {
-			cbFruit[i].addItemListener(this);
+			cbFruit[i].addItemListener(itemLogic);
 		}
-		ch.addItemListener(this);
+		ch.addItemListener(itemLogic);
 		
 		WindowAdapter wa = new WindowAdapter() {
 			public void 	windowClosing(WindowEvent e){
@@ -94,26 +100,5 @@ public class ItemTest extends Frame implements ItemListener, ActionListener{
 		new ItemTest();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		
-		if( e.getSource() == ch ) {
-			cbg1.setSelectedCheckbox(cbMeal[ch.getSelectedIndex()]);
-		}
-		
-		Checkbox cbSelect = cbg1.getSelectedCheckbox();
-		String selectStr = cbSelect.getLabel();
-		ta.setText("---" + selectStr + "---");
-		int len = cbFruit.length;
-		for (int i = 0; i < len; i++) {
-			ta.append("\n" + (i+1) + ". " + fruit[i] + " : " + (cbFruit[i].getState() ? "먹었다" : "안먹었다") );
-		}
-
-		ch.select(selectStr);
-	}
+	
 }
