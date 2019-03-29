@@ -29,12 +29,9 @@ public class CalculatorController implements ActionListener{
 			calcalatorService.exit();
 		
 		} else if(label.equals("C")) {
-			//=
 			calcalatorService.clear();
-			
 		} else {
 			// 일반 연산자들
-			System.out.println("일반 연산자눌림" + label);
 			calcalatorService.pressOperator(label);
 		}
 	}

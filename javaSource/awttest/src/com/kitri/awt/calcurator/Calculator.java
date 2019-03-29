@@ -62,14 +62,6 @@ public class Calculator extends Frame{
 		}
 		bExit.addActionListener(calculatorController);
 		
-		
-		WindowAdapter wa = new WindowAdapter() {
-			public void 	windowClosing(WindowEvent e){
-				System.exit(0);
-			}
-		};
-		
-		addWindowListener(wa);
 	}
 	
 	public static Color hex2Rgb(String colorStr) {
