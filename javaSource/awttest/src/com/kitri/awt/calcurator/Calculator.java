@@ -30,8 +30,8 @@ public class Calculator extends Frame{
 		//¹èÄ¡ºÎ
 		Font fNumber = new Font("Verdana", Font.BOLD, 30);
 		pResult.setLayout(new BorderLayout(5,0));
-		lNum.setBackground(hex2Rgb("#b2c3ca"));
-		lOper.setBackground(hex2Rgb("#daeff8"));
+		lNum.setBackground(hexToRgb("#b2c3ca"));
+		lOper.setBackground(hexToRgb("#daeff8"));
 		lNum.setFont(fNumber);
 		lOper.setFont(fNumber);
 		pResult.add(lNum, BorderLayout.CENTER);
@@ -42,7 +42,7 @@ public class Calculator extends Frame{
 		for (int i = 0; i < buttonAmount; i++) {
 			bDigit[i] = new Button(bStr[i]);
 			bDigit[i].setFont(fNumber);
-			bDigit[i].setBackground(hex2Rgb("#ecf7fc"));
+			bDigit[i].setBackground(hexToRgb("#ecf7fc"));
 			pDigit.add(bDigit[i]);
 		}
 		
@@ -64,7 +64,7 @@ public class Calculator extends Frame{
 		
 	}
 	
-	public static Color hex2Rgb(String colorStr) {
+	public static Color hexToRgb(String colorStr) {
 	    return new Color(
 	            Integer.valueOf( colorStr.substring( 1, 3 ), 16 ),
 	            Integer.valueOf( colorStr.substring( 3, 5 ), 16 ),

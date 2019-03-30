@@ -1,34 +1,57 @@
 package com.kitri.awt.calcurator;
 
 import java.awt.*;
-
+// : buffer 에 입력된것들을 저장, 계산결과는 result에 저장
+// : 연산기호가 들어오면 그동안 들어온 data 는 숫자화 후 계산, buffer는 비우고 연산기호로 변경
+// : 첫 입력숫자가 0인경우 계속 0처리, 이후 숫자가 들어오면 0은 삭제
+// : 연속으로 들어오는 연산기호는 마지막 연산기호를 기준으로 한다.
+// : 나누기0 처리는 단추를 전부 enable 하고 초기화버튼만 열어둔다
 public class CalculatorService {
 
 	CalculatorController calculatorController;
 	Calculator calculator;
-	//숫자가 들어올때마다 저장하는 buffer
+	Label lNum, lOper;
 	StringBuffer inputData;
-	//입력된 연산자를 저장
 	String operator;
-	//실제 계산결과
 	double result;
 	
+	//에러모드 상수
+	private final String DIVISION_BY_ZERO = "-1";
+	
+	//생성자
 	public CalculatorService(CalculatorController calculatorController) {
-		//초기값 설정
 		this.calculatorController = calculatorController;
 		this.calculator = calculatorController.calculator;
+		lOper = calculator.lOper;
+		lNum = calculator.lNum;
+		
 		operator = "";
-		inputData = new StringBuffer(calculator.lNum.getText());
-		result = Double.parseDouble(calculator.lNum.getText());
+		inputData = new StringBuffer(lNum.getText());
+		result = Double.parseDouble(lNum.getText());
 	}
-
+	
+	//종료버튼 눌렸을 시 작동
 	public void exit() {
-		//종료버튼 눌렸을 시 작동
 		System.exit(0);
 	}
-
+	
+	//클리어
+	public void clear() {
+		// 0으로 나눴을때 or 올바르지 않은 계산이 수행되었을 시
+		if(operator.equals(DIVISION_BY_ZERO)) {
+			for(int i=0 ; i< calculator.buttonAmount ; i++) {
+				calculator.bDigit[i].setEnabled(true);
+			}
+		}
+		operator = "";
+		lOper.setText("");
+		inputData.replace(0, inputData.length(), "0");
+		result = 0;
+		writelNum(result);
+	}
+	
+	//숫자버튼
 	public void pressDigit(String label) {
-		//숫자버튼 눌렸을 시 작동	
 		//마지막 연산자가 = 인데 숫자를 입력하면 다시 처음부터 시작
 		if(operator.equals("=")) {
 			clear();
@@ -41,7 +64,7 @@ public class CalculatorService {
 			}
 			else {
 				inputData.replace(0, inputData.length(), label);
-				calculator.lNum.setText(inputData.toString());
+				lNum.setText(inputData.toString());
 				return;
 			}
 		}
@@ -52,32 +75,34 @@ public class CalculatorService {
 		}	
 		
 		inputData.append(label);
-		calculator.lNum.setText(inputData.toString());
+		lNum.setText(inputData.toString());
 	}
-
+	
+	//연산자버튼
 	public void pressOperator(String label) {
-		//연산자 눌렸을 시
 		//최근 입력이 숫자였는지 확인
 		if(isNumber(inputData.charAt(0))) {
 			if(operator.equals("")) {
 				//첫 연산자
 				result = Double.parseDouble(inputData.toString());
 			} else {
-				calculate();
+				if( !calculate() )
+					//올바르지 않은 계산이 수행
+					return;
 			}
 		}else {
 			//연속해서 연산자가 눌림
 		}
 		operator = label;
-		calculator.lOper.setText(operator);
-		inputData.delete(0, inputData.length());
-		inputData.append(operator);
+		lOper.setText(operator);
+		inputData.replace(0, inputData.length(), operator);
 	}
 	
-	public void calculate(){
+	//계산
+	private boolean calculate(){
 		if(inputData.length() == 0) {
 			writelNum(result);
-			return;
+			return true;
 		}
 		double inputDouble = Double.parseDouble(inputData.toString());
 		
@@ -93,9 +118,8 @@ public class CalculatorService {
 			break;
 		case "/":
 			if(inputDouble == 0) {
-				clear();
-				calculator.lNum.setText("0으로 나눌 수 없습니다.");
-				return;
+				errorMode(DIVISION_BY_ZERO);
+				return false;
 			} else {
 				result /= inputDouble;
 			}
@@ -105,16 +129,28 @@ public class CalculatorService {
 			break;
 		}
 		writelNum(result);
-	}
-
-	public void clear() {
-		operator = "";
-		calculator.lOper.setText("");
-		inputData.replace(0, inputData.length(), "0");
-		result = 0;
-		writelNum(result);
+		return true;
 	}
 	
+	//ErrorMode
+	private void errorMode(String error) {
+		operator = error;
+		
+		switch (error) {
+		case DIVISION_BY_ZERO:
+			lNum.setText("0으로 나눌 수 없습니다.");
+			for(int i=0 ; i< calculator.buttonAmount ; i++) {
+				if( !calculator.bDigit[i].getLabel().equals("C")) {
+					calculator.bDigit[i].setEnabled(false);
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	
+	//숫자체크
 	private boolean isNumber(char ch) {
 		int number = ch - 48;
 		if(number  < 0 || number > 9)
@@ -122,12 +158,12 @@ public class CalculatorService {
 		return true;
 	}
 	
+	//.0 처리
 	private void writelNum(double number) {
-		Label label = calculator.lNum;
 		if(number == Math.round(number)) {
-			label.setText(String.valueOf( (int)number ));
+			lNum.setText(String.valueOf( (int)number ));
 		} else {
-			label.setText(String.valueOf(number));
+			lNum.setText(String.valueOf(number));
 		}
 	}
 }

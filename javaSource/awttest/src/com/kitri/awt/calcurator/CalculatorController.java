@@ -8,7 +8,6 @@ public class CalculatorController implements ActionListener{
 	
 	Calculator calculator;
 	CalculatorService calcalatorService;
-	//String bStr[] = {"7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "*", "0", "C", "=", "/"};
 	
 	public CalculatorController(Calculator calculator) {
 		this.calculator = calculator;
@@ -19,19 +18,18 @@ public class CalculatorController implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Button button = (Button)e.getSource();		
 		String label = button.getLabel();
-		//String labelArray[] = calculator.bStr;
-		if(label.charAt(0) >= '0' && label.charAt(0) <= '9') {
-			//
-			calcalatorService.pressDigit(label);
 		
+		if(label.charAt(0) >= '0' && label.charAt(0) <= '9') {
+			//숫자
+			calcalatorService.pressDigit(label);
 		} else if (label.equals("종료")) {
 			//종료
 			calcalatorService.exit();
-		
 		} else if(label.equals("C")) {
+			//클리어
 			calcalatorService.clear();
 		} else {
-			// 일반 연산자들
+			//연산자
 			calcalatorService.pressOperator(label);
 		}
 	}
