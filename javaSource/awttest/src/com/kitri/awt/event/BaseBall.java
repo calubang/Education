@@ -24,8 +24,7 @@ public class BaseBall extends Frame{
 	
 	//has - a
 	BaseBallController baseBallController;
-	FontColorChooser fontColorChooser = new FontColorChooser();
-	
+	FontColorChooser fontColorChooser;
 	
 	public BaseBall() {
 		
@@ -62,25 +61,19 @@ public class BaseBall extends Frame{
 		
 		//baseball event
 		baseBallController = new BaseBallController(this);
+		fontColorChooser = new FontColorChooser();
+
 		for (int i = 0; i < len; i++) {
 			bMenu[i].addActionListener(baseBallController);
 		}
 		tf.addActionListener(baseBallController);
-	
-		//fontColorChooser event
+		
 		fontColorChooser.sbR.addAdjustmentListener(baseBallController);
 		fontColorChooser.sbG.addAdjustmentListener(baseBallController);
 		fontColorChooser.sbB.addAdjustmentListener(baseBallController);
 		fontColorChooser.bOk.addActionListener(baseBallController);
 		
-		
-		WindowAdapter wa = new WindowAdapter() {
-			public void 	windowClosing(WindowEvent e){
-				System.exit(0);
-			}
-		};
-		
-		addWindowListener(wa);
+		addWindowListener(baseBallController);
 	}
 	
 	

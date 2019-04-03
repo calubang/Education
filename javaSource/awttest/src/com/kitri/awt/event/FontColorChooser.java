@@ -30,7 +30,7 @@ public class FontColorChooser extends Frame{
 	Panel pMenu = new Panel();
 	Label lColor = new Label("", Label.CENTER);
 	Button bOk = new Button("»Æ¿Œ");
-	
+		
 	public FontColorChooser() {
 		super("FontColorChooser");
 		//pw
@@ -72,13 +72,14 @@ public class FontColorChooser extends Frame{
 		setBounds(300, 200, 500, 500);
 		//this.setVisible(true);	
 		
-		WindowAdapter wa = new WindowAdapter() {
-			public void 	windowClosing(WindowEvent e){
-				System.exit(0);
-			}
-		};
+		//fontColorChooser event
 		
-		addWindowListener(wa);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				setVisible(false);
+			}
+		});
 	}
 	
 }

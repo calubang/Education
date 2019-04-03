@@ -2,7 +2,7 @@ package com.kitri.awt.event;
 
 import java.awt.event.*;
 
-public class BaseBallController implements ActionListener, AdjustmentListener{
+public class BaseBallController extends WindowAdapter implements ActionListener, AdjustmentListener{
 
 	BaseBall baseBall;
 	BaseBallService baseBallService;
@@ -49,6 +49,11 @@ public class BaseBallController implements ActionListener, AdjustmentListener{
 	@Override
 	public void adjustmentValueChanged(AdjustmentEvent e) {
 		baseBallService.changeColor();
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		baseBallService.exit();
 	}
 	
 }
