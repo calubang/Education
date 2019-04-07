@@ -52,10 +52,10 @@ public class HaksaDto {
 		info += "\t이름 : " + getName();
 		info += "\t직업 : ";
 		
-		if(key == 0) {
+		if(key == 1) {
 			info += "학생";
 			info += "\t학번 : ";
-		} else if(key == 1) {
+		} else if(key == 2) {
 			info += "교수";
 			info += "\t과목 : ";
 		} else {

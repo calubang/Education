@@ -1,20 +1,21 @@
 package com.kitri.haksa.service;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 import com.kitri.haksa.data.HaksaDto;
+import com.kitri.haksa.db.DaoFactory;
+import com.kitri.haksa.db.HaksaDao;
 
 public class HaksaServiceImpl implements HaksaService{
-	private ArrayList<HaksaDto> list;
 	private String job[] = {"학번", "과목", "부서"};
 	private BufferedReader in;
+	private HaksaDao haksaDao;
 	
 	public HaksaServiceImpl() {
 		super();
-		list = new ArrayList<HaksaDto>();
 		in = new BufferedReader(new InputStreamReader(System.in));
+		haksaDao = new HaksaDao(DaoFactory.connectionMaker("oracle"));
 		//menu();
 	}
 	
@@ -106,9 +107,9 @@ public class HaksaServiceImpl implements HaksaService{
 					System.out.print("이름 : ");
 					name = in.readLine().trim();
 					
-					key = numberInput-1;
+					key = numberInput;
 					
-					System.out.print(job[key]+" : ");
+					System.out.print(job[key-1]+" : ");
 					value = in.readLine().trim();
 					
 					haksa = new HaksaDto(age, name, key, value);
@@ -129,7 +130,8 @@ public class HaksaServiceImpl implements HaksaService{
 	}
 	@Override
 	public void register(HaksaDto haksa) {
-		list.add(haksa);
+		haksaDao.add(haksa);
+		//list.add(haksa);
 		System.out.println("[" + haksa + "] 가 등록 되었습니다.");
 	}
 	
@@ -166,10 +168,12 @@ public class HaksaServiceImpl implements HaksaService{
 	}
 	@Override
 	public HaksaDto findName(String name) {
-		int len = list.size();
+		List<HaksaDto> list = haksaDao.findName(name);
 		HaksaDto haksa = null;
+		int len = list.size();
+		
 		if(len == 0) {
-			System.out.println("목록이 비었습니다.");
+			System.out.println("일치하는 이름을 찾지 못하였습니다.");
 		}else {
 			for (int i = 0; i < len; i++) {
 				HaksaDto temp = list.get(i);
@@ -185,7 +189,6 @@ public class HaksaServiceImpl implements HaksaService{
 	//삭제
 	@Override
 	public void deleteMenu() {
-		HaksaDto haksa = null;
 		String name = "";
 		int count = 0;
 		String menu = "";
@@ -220,35 +223,25 @@ public class HaksaServiceImpl implements HaksaService{
 	}
 	@Override
 	public int delete(String name) {
-		int count = 0;
-		HaksaDto haksa = null;
-		Iterator<HaksaDto> iter = list.iterator();
-		
-		while(iter.hasNext()) {
-			haksa = iter.next();
-			if(haksa.getName().equals(name)) {
-				System.out.println(haksa.getName() + " 님을 삭제하였습니다.");
-				iter.remove();
-				count++;
-			}
-		}
-		return count;
+		return haksaDao.delete(name);
 	}
 	@Override
 	public void selectAll() {
-		HaksaDto haksaDto = null;
 		String menu = "";
-		int len = list.size();
 		
 		do{
-			if(len == 0) {
-				System.out.println("등록된 사람이 없습니다.");
+			List<HaksaDto> list = null;
+			list = haksaDao.getAll();
+			int size = list.size();
+			
+			if(list.size() == 0) {
+				System.out.println("데이터가 없습니다.");
 			}else {
-				for (int i = 0; i < len; i++) {
-					haksaDto = list.get(i);
-					System.out.println(haksaDto);
+				for(int i = 0 ; i<size ; i++) {
+					System.out.println(list.get(i));
 				}
 			}
+			
 			while(true){
 				System.out.print("계속 하시려면 1, 종료 하시려면 0을 입력해주세요  ");
 				try {
