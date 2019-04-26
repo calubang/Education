@@ -11,6 +11,7 @@ public class DaoFactory {
 		}
 		return null;
 	}
+	
 	public static Object getDao(String name) {
 		
 		switch(name) {

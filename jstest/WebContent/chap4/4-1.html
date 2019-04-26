@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function alertOpen() {
+	alert("알림창입니당.");
+}
+
+function confirmOpen() {
+	if(confirm("진짜 삭제?")){
+		console.log("삭제되었습니다.");
+	}else{
+		console.log("취소되었습니당");
+	}
+}
+
+function promptOpen() {
+	var text = prompt("이름입력!!", "");
+	console.log("당신의 이름은 " + text + "입니다.");
+}
+
+//첫번째는 url 
+//두번째는 창의 이름 : 없으면 새창이 계속 열린다.
+function myOpen() {
+	window.open("/js/chap4/myHtml.html", "checkID", "width=400, height=300");
+}
+</script>
+</head>
+<body>
+<div align="center">
+<button onclick="alertOpen();">알림창</button>
+<button onclick="javascript:confirmOpen();">확인창</button>
+<button onclick="javascript:promptOpen();">입력창</button>
+<button onclick="javascript:myOpen();">새창열기</button>
+<br>
+</div>
+Span 메세지 : <span id = "view" style="background-color: red"></span>
+Div 메세지 : <div style="background-color: orange">안녕하세요 div 에요. </div>
+
+</body>
+</html>

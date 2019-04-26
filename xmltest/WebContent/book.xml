@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE booklist SYSTEM "book.dtd">
+<booklist>
+	<book isbn="가-1" kind="IT">
+		<title>자바입문</title>
+		<author>
+			<name>안병욱</name>
+			<tel>010-7163-3863</tel>
+			<address>경기도 광명시</address>
+		</author>
+		<publisher>출판왕</publisher>
+		<price>4000</price>
+		<description>자바입문할 때 좋은 책입니다.</description>
+	</book>
+	<book isbn="가-2">
+		<title>헬인천</title>
+		<author>
+			<name sex="남">김우진</name>
+			<tel>010-xxxx-xxxx</tel>
+			<address>인천</address>
+		</author>
+		<publisher>출판왕</publisher>
+		<price>400</price>
+		<description>인천 그 자체</description>
+	</book>
+	<book isbn="나-1" kind="잡지">
+		<title>정처기 따라잡기</title>
+		<author>
+			<writer>노정탁</writer>
+			<tel>010-xxxx-xxxx</tel>
+			<address>청량리</address>
+		</author>
+		<publisher>출판하청</publisher>
+		<price>200</price>
+		<description>정처기 경력 10년</description>
+	</book>
+	<book isbn="다-1">
+		<title>조윤영의 ppt교실</title>
+		<author>
+			<name sex="여">조윤영</name>
+			<tel>010-xxxx-xxxx</tel>
+			<address>윤영집</address>
+		</author>
+		<publisher>하청출판</publisher>
+		<price>400</price>
+	</book>
+
+	<book isbn="라-1">
+		<title>혼밥하는 방법</title>
+		<author>
+			<name>이종영</name>
+			<tel>010-xxxx-xxxx</tel>
+			<address></address>
+		</author>
+		<publisher>인터넷소설</publisher>
+		<price>무료</price>
+	</book>
+</booklist>

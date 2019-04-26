@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+book은 1개 이상
+kind는 필수, kind 는 IT, 소설, 잡지  인데 디폴트는 IT
+id 는 isbn 으로 변경하고 유일값
+description 와도 안와도
+sex(남, 여) 디폴트가 남
+
+<!ELEMENT book (title, author, price, description?)>
+	<!ELEMENT title (#PCDATA)>
+	<!ELEMENT author (#PCDATA)>
+	<!ENTITY kr "outter.dtd">
+	<!ELEMENT price (#PCDATA)>
+	<!ELEMENT description (#PCDATA)>
+
+-->
+<!ELEMENT booklist (book+)>
+	<!ELEMENT book (title, author, publisher, price, description?)>	
+	<!ELEMENT title (#PCDATA)>
+	<!ELEMENT author ((name | writer), tel, address) >
+		<!ELEMENT name (#PCDATA)>
+		<!ELEMENT writer (#PCDATA)>
+		<!ELEMENT tel (#PCDATA)>
+		<!ELEMENT address (#PCDATA)>
+	<!ELEMENT publisher (#PCDATA)>
+	<!ELEMENT price (#PCDATA)>
+	<!ELEMENT description (#PCDATA)>
+<!ATTLIST book kind (IT | 소설 | 잡지) "IT">
+<!ATTLIST book isbn ID #REQUIRED>
+<!ATTLIST writer sex (남 | 여) "남">
+<!ATTLIST name sex (남 | 여) "여">
+

@@ -130,8 +130,9 @@ public class HaksaServiceImpl implements HaksaService{
 	}
 	@Override
 	public void register(HaksaDto haksa) {
-		haksaDao.add(haksa);
-		//list.add(haksa);
+		if(haksaDao.add(haksa) == -1) {
+
+		};
 		System.out.println("[" + haksa + "] 가 등록 되었습니다.");
 	}
 	
