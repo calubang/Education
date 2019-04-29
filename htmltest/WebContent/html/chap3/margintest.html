@@ -7,68 +7,64 @@
 * {
 	box-sizing: border-box;
 }
+.container{
+	width: 300px;
+	height: 600px;
+	background-color: yellow;
+	float: left;
+	border: 1px solid;
+}
 
+.parent2{
+	width: 200px;
+	height: 200px;
+	background-color: #bcbcbc; 
+	margin:10px;
+	border: 1px solid;
+}
+
+.parent{
+	width: 200px;
+	height: 200px;
+	background-color: #bcbcbc; 
+	margin:10px;
+}
 .cell{
 	height: 100px;
 	width: 100px;
 	text-align: center;
 	vertical-align: middle;
 }
-.parent2{
-	width: 300px;
-	height: 40px;
-	padding: 5px;
-	border: 1px solid steelblue;
-	background-color: #bcbcbc; 
-	margin:auto;
-	line-height: 10px;
-}
-
-.parent{
-	background-color: #bcbcbc; 
-	margin:10px;
-	border: 1px solid;
-}
-
 #div1{
-	margin-top: 100px;
 	margin-bottom:100px;
 	background-color: blue;
 }
 
 #div2{
 	margin-top:100px;
-	margin-bottom: 100px;
 	background-color: red;
-}
-
-#div3{
-	margin-top:100px;
-	margin-bottom: 100px;
-	background-color: red;
-}
-
-#div4{
-	margin-top: 100px;
-	background-color: blue;
 }
 
 </style>
 </head>
-<body>	
-	<div class="parent">
-		<div class="cell" id="div1">자식1</div>
-	</div>
+<body>
+	<div class="container">
+		<div class="parent">
+			<div class="cell" id="div1">자식마진 : 100px</div>
+		</div>
+		<div class="parent">
+			<div class="cell" id="div2">자식 마진 : 100px</div>
+		</div>
+	</div>	
 	
-	<div class="parent">
-		<div class="cell" id="div2">자식2</div>
+	<div class="container">
+		<div class="parent2">
+			<div class="cell" id="div1">자식마진 : 100px</div>
+		</div>
+		<div class="parent2">
+			<div class="cell" id="div2">자식 마진 : 100px</div>
+		</div>
 	</div>
-	
-	<br>
-	<br>
-	<br>
-	<div class="parent2">
-		<p>해당 글자는 가운데 정렬이 적용된다.</p>
-	</div>
+
 </body>
 </html>
