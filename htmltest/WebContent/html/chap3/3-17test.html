@@ -6,45 +6,44 @@
 <style type="text/css">
 
 * { 
-<!--
-	background-color: red;	
-	-->
+/* <!-- 모든 element 선택 --> */
+	color: gray;	
 }
 
 p {
-<!--
-	background-color: #feeeed;	
-	-->
+/*  p tag 선택  */
+	background-color: red;	
 }
  
 .col1 {
-<!--
+/*  col1 class 선택 */ 
 	background-color: #dffbf3;	
 	
 }
 
 #name{
-<!--
-	background-color: #fbceb1;	
-	-->
+/*  name id 선택 */
+	background-color: blue;	
 }
 
-.table > input {
-<!--
+.table input {
+ /* table class 하위의 모든 input 선택 */
 	background-color: #fbceb1;	
-	-->
 }
 
-.col2 > input {
-	<!--
-	background-color: #fbceb1;	
-	-->
+.col2 > select {
+ /* col2 class 의 직속하위 select 에만 적용 */  
+	background-color: yellow;	
 }
 
-#label_apple + #label_strawberry {
-<!--
-	background-color: #fbceb1;	
-	-->
+#label_apple + #label_watermelon {
+/*  id : label_apple 바로 옆의 id : label_watermelon선택 */ 
+	background-color: aqua;	
+}
+
+#label_watermelon ~ label {
+/*  id : label_watermelon 바로 옆의 label tag 모두 선택 */ 
+	background-color: pink;	
 }
 
 </style>
