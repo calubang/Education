@@ -1,8 +1,18 @@
 package com.kitri.basic;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.NumberFormat;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,9 +30,90 @@ public class Counter extends HttpServlet {
 	
 	//init()
 	//디비 드라이버 로딩
+	@Override
+	public void init() throws ServletException {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			System.out.println("드라이버 성공!!");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Properties propertiesLoad() {
+		Properties prop = new Properties();
+		try {
+			System.out.println(this.getClass().getResource("\\user.properties"));
+			prop.load(new FileReader(new File(this.getClass().getResource("\\user.properties").toURI())));
+			return prop;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public Connection makeConnection() throws SQLException {
+		Connection con = null;
+		Properties db = propertiesLoad();
+		
+		//System.out.println(db);
+		
+		//con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "kitri", "kitri");
+		con = DriverManager.getConnection(db.getProperty("url"), db);
+		System.out.println("Connection 성공!!");
+		return con;
+	}
+	
+	public void closeDB(Connection con, Statement stmt) {
+		if(stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		cnt++;
+		Connection con = null;
+		Statement stmt = null;
+		String sql = 
+				"update connectionlog\n" + 
+				"set no = "+ cnt;
+		System.out.println(sql);
+		int result = 0;
+		
+		try {
+			con = makeConnection();
+			stmt = con.createStatement();
+			result = stmt.executeUpdate(sql);
+			System.out.println(result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeDB(con, stmt);
+		}
+		
+		if(result != 1) {
+			System.out.println("DB Error!!!");
+			return;
+		}
 		
 		String count = String.format(("%0"+ max+ "d") , cnt);	
 		

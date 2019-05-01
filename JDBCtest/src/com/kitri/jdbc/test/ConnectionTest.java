@@ -19,7 +19,7 @@ public class ConnectionTest {
 			//network어쩌구 : ip, port 혹은 앞에 형식이 틀렸을때
 			//sid 어쩌구 : 서비스상에 orcl 이 안떠있을때
 			//login 어쩌구 : id pass 가 틀렸을 때
-			con = DriverManager.getConnection("jdbc:oracle:thin:@192.168.14.52:1521:orcl", "kitri", "kitri");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "kitri", "kitri");
 			System.out.println("DB Connection!!!");
 		} catch (SQLException e) {
 			e.printStackTrace();
