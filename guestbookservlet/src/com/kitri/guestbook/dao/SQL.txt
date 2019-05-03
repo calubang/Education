@@ -1,0 +1,27 @@
+insert into guestbook(
+	seq
+	, name
+	, subject
+	, content
+	, logtime
+) values(
+	guestbook_seq.nextval
+	, '안병욱'
+	, '11'
+	, '11'
+	, sysdate
+)
+
+sql.append("insert into guestbook(	\n");
+sql.append("	seq							\n");
+sql.append("	, name						\n");
+sql.append("	, subject						\n");
+sql.append("	, content					\n");
+sql.append("	, logtime					\n");
+sql.append(") values(						\n");
+sql.append("	guestbook_seq.nextval	\n");
+sql.append("	, '안병욱'						\n");
+sql.append("	, '11'							\n");
+sql.append("	, '11'							\n");
+sql.append("	, sysdate					\n");
+sql.append(")									\n");
