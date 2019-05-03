@@ -25,3 +25,23 @@ sql.append("	, '11'							\n");
 sql.append("	, '11'							\n");
 sql.append("	, sysdate					\n");
 sql.append(")									\n");
+
+
+select 
+    seq
+    , name
+    , subject
+    , content
+    , to_char(logtime, 'yyyy.mm.dd') as logtime
+from guestbook
+order by seq desc
+
+
+sql.append("select				\n");
+sql.append("    seq				\n");
+sql.append("    , name			\n");
+sql.append("    , subject		\n");
+sql.append("    , content		\n");
+sql.append("    , to_char(logtime, 'yyyy.mm.dd') as logtime	\n");
+sql.append("from guestbook	\n");
+sql.append("order by seq	desc\n");

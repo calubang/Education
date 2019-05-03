@@ -3,13 +3,17 @@ package com.kitri.guestbook.dao;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
-import com.kitri.guestbook.dto.GuestaBookDto;
+import com.kitri.guestbook.dto.GuestBookDto;
 
 public class GuestBookDao {
 	private static Properties DB = null;
 	
+	//생성자
+	//DB Driver, properties Loading
 	public GuestBookDao() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -20,7 +24,8 @@ public class GuestBookDao {
 			e.printStackTrace();
 		}
 	}
-
+	
+	//DB 접속 정보 Load
 	private Properties propertiesLoad() {
 		Properties properties = new Properties();
     	
@@ -39,6 +44,7 @@ public class GuestBookDao {
 		return null;
 	}
 	
+	//DB Connection생성
 	public Connection makeConnection() throws SQLException {
     	Connection con = null;
     	
@@ -52,7 +58,8 @@ public class GuestBookDao {
     	return con;
     }
 	
-	private void closeDB(Connection con, Statement stmt, ResultSet rs) {
+	//DB Close
+	private void closeDB(Connection con, PreparedStatement pstmt, ResultSet rs) {
 		if(rs != null) {
 			try {
 				rs.close();
@@ -61,9 +68,9 @@ public class GuestBookDao {
 			}
 		}
 		
-		if(stmt != null) {
+		if(pstmt != null) {
 			try {
-				stmt.close();
+				pstmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -78,7 +85,8 @@ public class GuestBookDao {
 		}
 	}
 	
-	public int insert(GuestaBookDto dto) {
+	//데이터 insert
+	public int insert(GuestBookDto dto) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -109,8 +117,50 @@ public class GuestBookDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			closeDB(con, pstmt, null);
 		}
 		
 		return result;
+	}
+	
+	//데이터 select
+	public List<GuestBookDto> selectAll() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<GuestBookDto> list = new ArrayList<GuestBookDto>();
+		StringBuffer sql = new StringBuffer();
+		sql.append("select				\n");
+		sql.append("    seq				\n");
+		sql.append("    , name			\n");
+		sql.append("    , subject		\n");
+		sql.append("    , content		\n");
+		sql.append("    , to_char(logtime, 'yyyy.mm.dd') as logtime	\n");
+		sql.append("from guestbook	\n");
+		sql.append("order by seq	desc\n");
+		
+		try {
+			con = makeConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				GuestBookDto dto = new GuestBookDto();
+				dto.setSeq(rs.getInt("seq"));
+				dto.setName(rs.getString("name"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setContent(rs.getString("content"));
+				dto.setLogtime(rs.getString("logtime"));
+				list.add(dto);
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeDB(con, pstmt, rs);
+		}
+		
+		return list;
 	}
 }

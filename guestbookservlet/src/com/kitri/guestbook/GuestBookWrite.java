@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kitri.guestbook.dao.GuestBookDao;
-import com.kitri.guestbook.dto.GuestaBookDto;
+import com.kitri.guestbook.dto.GuestBookDto;
 
 @WebServlet({ "/GuestBookWrite", "/guestbookwrite" })
 public class GuestBookWrite extends HttpServlet {
@@ -28,7 +28,7 @@ public class GuestBookWrite extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		int result = 0;
 		
-		GuestaBookDto guestaBookDto = new GuestaBookDto();
+		GuestBookDto guestaBookDto = new GuestBookDto();
 		guestaBookDto.setName(request.getParameter("name"));
 		guestaBookDto.setSubject(request.getParameter("subject"));
 		guestaBookDto.setContent(request.getParameter("content"));

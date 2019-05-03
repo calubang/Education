@@ -2,17 +2,17 @@ package com.kitri.guestbook.dto;
 
 import java.sql.Date;
 
-public class GuestaBookDto {
+public class GuestBookDto {
 	private int seq;
 	private String name;
 	private String subject;
 	private String content;
 	private String logtime;
 	
-	public GuestaBookDto() {
+	public GuestBookDto() {
 		super();
 	}
-	public GuestaBookDto(int seq, String name, String subject, String content, String logtime) {
+	public GuestBookDto(int seq, String name, String subject, String content, String logtime) {
 		super();
 		this.seq = seq;
 		this.name = name;
