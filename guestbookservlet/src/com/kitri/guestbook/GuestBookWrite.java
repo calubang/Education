@@ -47,7 +47,7 @@ public class GuestBookWrite extends HttpServlet {
 			out.println("<font size='15' color='red'>");
 			out.println("서버 문제로 방명록 등록이 실패하였습니다.");
 			out.println("다음에 다시 시도하세요.");
-			out.println("<a href='/guestbookservlet/guestbookwrite'>리스트 보기</a>");	
+			out.println("<a href='/guestbookservlet/guestbook/write.html'>다시 방명록 쓰기</a>");	
 			out.println("</font>");
 		}
 		

@@ -9,38 +9,40 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class Basic
- */
-@WebServlet("/basic")
-public class Basic extends HttpServlet {
+@WebServlet("/counter_origin")
+public class Counter_origin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  
-	public String name;
-	public int age;
+
+	int cnt;
+	int totalLen;
 	
 	public void init() {
-		name = "고먐미";
-		age = 17;
+		cnt = 0;
+		totalLen = 8;
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		cnt++;
+		String cntStr = cnt + "";//137
+		int cntLen = cntStr.length();//3
+		int zeroLen = totalLen - cntLen;//5
+		
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
 		out.println("	<body>");
+		out.println("당신은<br>");
 		
-		String fontColor = "";
-		if(age < 19) {
-			fontColor = "red";
-		}else {
-			fontColor = "steelblue";
-		}
+		for(int i=0;i<zeroLen;i++)
+			out.println("<img src=\"/basicservlet/img/0.png\" width=\"50\">");
 		
-		out.println("<font color=\""+ fontColor + "\">" + name + "님("+ age + ")안녕하세요</font>");
+		for(int i=0;i<cntLen;i++)
+			out.println("<img src=\"/basicservlet/img/" + cntStr.charAt(i) + ".png\" width=\"50\">");
+		
+		out.println("<br>번째 방문자입니다.");
 		out.println("	</body>");
 		out.println("</html>");
-		
 	}
+
 
 }

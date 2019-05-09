@@ -136,7 +136,7 @@ public class GuestBookDao {
 		sql.append("    , name			\n");
 		sql.append("    , subject		\n");
 		sql.append("    , content		\n");
-		sql.append("    , to_char(logtime, 'yyyy.mm.dd') as logtime	\n");
+		sql.append("    , decode( to_char(logtime, 'yyyymmdd'), to_char(sysdate, 'yyyymmdd'), to_char(logtime, 'hh24:mi:ss'), to_char(logtime, 'yyyy.mm.dd hh24:mi:ss') ) as logtime	\n");
 		sql.append("from guestbook	\n");
 		sql.append("order by seq	desc\n");
 		
