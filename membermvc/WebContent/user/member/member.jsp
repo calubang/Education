@@ -5,22 +5,15 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	 
-	$('#zipcode').focusin(function() {
-		$('#zipModal').modal();
-	});
-	
-});
-
-window.onload = function(){
-	//회원가입 버튼에 click 이벤트 넣어두기
 	document.getElementById("registerBtn").addEventListener("click", register, false);
 	document.getElementById("id").addEventListener("keyup", idcheck, false);
-}
-
+	
+});
 var idcount = 1;
 var resultView;
 
 function register() {
+	
 	if(document.getElementById("name").value == ""){
 		alert("이름 입력!!!!");
 		return;
@@ -43,7 +36,7 @@ function idcheck(){
 	resultView = document.getElementById("idresult");
 	var searchId = document.getElementById("id").value;
 	if(searchId.length < 5 || searchId.length > 16){
-		//resultView.innerHTML = "<font color='gray'>아이디는 5글자 이상 16자이하입니다.</font>";
+		resultView.innerHTML = "<font color='gray'>아이디는 5글자 이상 16자이하입니다.</font>";
 	} else{
 		var params = "act=idcheck&sid="+searchId;
 		sendRequest("<%=root%>/user", params, idcheckResult, "GET");
@@ -53,7 +46,6 @@ function idcheck(){
 function idcheckResult() {
 	if(httpRequest.readyState == 4){
 		if(httpRequest.status = 200){
-			removeLoading();
 			var result = httpRequest.responseXML;
 			//alert(result);
 			//tagname의 집합 -> 첫번째 자식엘리먼트 -> 그것의 data 를 해야 정확히 가져온다
@@ -66,26 +58,11 @@ function idcheckResult() {
 		}
 	} else{
 		//로딩중...
-		makeLoading();
+		resultView.innerHTML = "<img src='<%=root%>/img/loading.gif' width='80' height='80'>";
 	}
 }
 
-function removeLoading() {
-	resultView.style.backgroundImage = "";
-	resultView.style.height = "";
-	resultView.style.backgroundSize = "";
-	resultView.style.backgroundRepeat = "";
-}
-function makeLoading() {
-	resultView.style.backgroundImage = "url('<%=root%>/img/loading.gif')";
-	resultView.style.height = "50px";
-	resultView.style.backgroundSize = "50px 50px";
-	resultView.style.backgroundRepeat = "no-repeat";
-}
-
-
 </script>
-
 <body>
 
 <div class="container" align="center">
@@ -100,9 +77,7 @@ function makeLoading() {
 			<div class="form-group" align="left">
 				<label for="">아이디</label>
 				<input type="text" class="form-control" id="id" name="id" placeholder="4자이상 16자 이하">
-				<div id="idresult">
-					
-				</div>
+				<div id="idresult"></div>
 			</div>
 			
 			<div class="form-group" align="left">

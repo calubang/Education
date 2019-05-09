@@ -1,13 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <script type="text/javascript">
-var zipListView;
-
-window.onload = function () {
+$(document).ready(function() {
+	 
+	$('#zipcode').focusin(function() {
+		$('#zipModal').modal();
+	});
+	
 	document.getElementById("searchBtn").addEventListener("click", zipSearch, "false");	
 	zipListView = document.getElementById("zip_codeList");
-}
+	
+});
+
+var zipListView;
 
 function zipSearch() {
 	var doro = document.getElementById("doro").value;
@@ -56,8 +61,11 @@ function zipsearchResult() {
 function selectZip(zipcode, address) {
 	document.getElementById("zipcode").value = zipcode;
 	document.getElementById("address").value = address;
+	
+	$('#zipModal').modal("hide");
 }
 </script>
+
 <div id="zipModal" class="modal fade" role="dialog">
 	<h5 class="modal-title" id="myModalLabel">우편번호검색</h5>
     <div class="modal-dialog">

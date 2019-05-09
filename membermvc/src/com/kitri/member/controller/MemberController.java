@@ -27,9 +27,9 @@ public class MemberController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String act = request.getParameter("act");
-		response.setContentType("text/xml;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		
+		String contextPath = request.getContextPath();
+		String result = "";
 		if(act == null) {
 			//에러코드 삽입
 			return;
@@ -39,51 +39,58 @@ public class MemberController extends HttpServlet {
 		//분기
 		switch (act) {
 		case "join":
-			response.sendRedirect("/membermvc/user/member/member.jsp");
+			response.sendRedirect(contextPath + "/user/member/member.jsp");
 			break;
-			
 		case "login":
-			response.sendRedirect("/membermvc/user/login/login.jsp");
+			response.sendRedirect(contextPath + "/user/login/login.jsp");
 			break;
-			
 		case "idcheck":
 			String sid = request.getParameter("sid");
-			String resultXML = MemberServiceImpl.getMemberService().idCheck(sid);
-			out.print(resultXML);
+			result = MemberServiceImpl.getMemberService().idCheck(sid);
+			sendXML(response, result);
 			break;
 		case "zipsearch":
 			String doro = request.getParameter("doro");
-			String doroXML = MemberServiceImpl.getMemberService().zipSearch(doro);
-			//System.out.println(doroXML);
-			out.print(doroXML);
+			result = MemberServiceImpl.getMemberService().zipSearch(doro);
+			sendXML(response, result);
 			break;
 		case "register":
-			
-			MemberDetailDto dto = new MemberDetailDto();
-			dto.setName(request.getParameter("name"));
-			dto.setId(request.getParameter("id"));
-			dto.setPass(request.getParameter("pass"));
-			dto.setEmailid(request.getParameter("emailid"));
-			dto.setEmaildomain(request.getParameter("emaildomain"));
-			dto.setTel1(request.getParameter("tel1"));
-			dto.setTel2(request.getParameter("tel2"));
-			dto.setTel3(request.getParameter("tel3"));
-			dto.setZipcode(request.getParameter("zipcode"));
-			dto.setAddress(request.getParameter("address"));
-			dto.setAddressDetail(request.getParameter("address_detail"));
-
-			int cnt = MemberServiceImpl.getMemberService().registerMember(dto);
-			System.out.println("cnt = " + cnt);
+			register(request, response);
 			break;
 		default:
 			break;
 		}
-		
+	}
+	
+	private void register(HttpServletRequest request, HttpServletResponse response) {
+		MemberDetailDto dto = new MemberDetailDto();
+		dto.setName(request.getParameter("name"));
+		dto.setId(request.getParameter("id"));
+		dto.setPass(request.getParameter("pass"));
+		dto.setEmailid(request.getParameter("emailid"));
+		dto.setEmaildomain(request.getParameter("emaildomain"));
+		dto.setTel1(request.getParameter("tel1"));
+		dto.setTel2(request.getParameter("tel2"));
+		dto.setTel3(request.getParameter("tel3"));
+		dto.setZipcode(request.getParameter("zipcode"));
+		dto.setAddress(request.getParameter("address"));
+		dto.setAddressDetail(request.getParameter("address_detail"));
+
+		int cnt = MemberServiceImpl.getMemberService().registerMember(dto);
+		System.out.println("cnt = " + cnt);
+	}
+
+	private void sendXML(HttpServletResponse response, String xml) throws IOException {
+		response.setContentType("text/xml;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.print(xml);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding(SiteConstance.ENCODE);
 		doGet(request, response);
 	}
+	
+	
 
 }
