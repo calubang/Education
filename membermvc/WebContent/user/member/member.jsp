@@ -27,7 +27,7 @@ function register() {
 		alert("비밀번호를 체크해라!!!!");
 		return;
 	} else{
-		getElementById("memberform").action = "<%=root%>/user";
+		document.getElementById("memberform").action = "<%=root%>/user";
 		document.getElementById("memberform").submit();
 	}
 } 

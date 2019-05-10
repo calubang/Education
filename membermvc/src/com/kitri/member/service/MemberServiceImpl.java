@@ -1,6 +1,6 @@
 package com.kitri.member.service;
 
-import java.util.List;
+import java.util.*;
 
 import com.kitri.member.dao.MemberDao;
 import com.kitri.member.dao.MemberDaoImpl;
@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public String zipSearch(String searchAddress) {
-		String resultXML = "";
+		String resultXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		List<ZipcodeDto> list = MemberDaoImpl.getMemberDao().zipSearch(searchAddress);
 		resultXML += "<ziplist>";
 		
@@ -57,7 +57,10 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto loginMember(String id, String pass) {
-		return null;
+		Map<String, String> loginInfo = new HashMap<String, String>();
+		loginInfo.put("userId", id);
+		loginInfo.put("userPass", pass);
+		return MemberDaoImpl.getMemberDao().loginMember(loginInfo);
 	}
 
 	@Override

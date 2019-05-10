@@ -57,3 +57,18 @@ membermvc
 				  loginfail.jsp
 		
 		* index.jsp : main
+		
+		
+* httpSession & Cookie
+Cookie 			: Client	String	txt
+
+
+HttpSession	: server	memory Object
+
+
+
+오늘 본 상품 : 쿠키에 사진이나 key값정도만 담김
+
+찜목록(위시리스트) : 그냥 제품code같은 것만 담김, 세션에 넣을지 db에서 처리할지
+
+장바구니 : 객체가 담김

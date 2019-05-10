@@ -171,7 +171,45 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public MemberDto loginMember(Map<String, String> loginInfo) {
-		return null;
+		MemberDto memberDto = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select	\n");
+			sql.append("	id	\n");
+			sql.append("	, name	\n");
+			sql.append("	, emailid	\n");
+			sql.append("	, emaildomain	\n");
+			sql.append("	, joindate	\n");
+			sql.append("from member	\n");
+			sql.append("where 	\n");
+			sql.append("	id = ?	\n");
+			sql.append("	and pass = ?	\n");
+
+			pstmt = con.prepareStatement(sql.toString());
+			int index = 0;
+			pstmt.setString(++index, loginInfo.get("userId"));
+			pstmt.setString(++index, loginInfo.get("userPass"));
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				memberDto = new MemberDto();
+				memberDto.setId(rs.getString("id"));
+				memberDto.setName(rs.getString("name"));;
+				memberDto.setEmailid(rs.getString("emailid"));
+				memberDto.setEmaildomain(rs.getString("emaildomain"));
+				memberDto.setJoindate(rs.getString("joindate"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}
+		return memberDto;
 	}
 
 	@Override

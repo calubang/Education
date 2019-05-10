@@ -9,4 +9,6 @@ public class SiteConstance {
 	public static final String DB_USERNAME = "kitri";
 	public static final String DB_PASSWORD = "kitri";
 	
+	public static final String SITE_MAIN = "/index.jsp";
+	
 }

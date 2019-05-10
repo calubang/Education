@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="javax.servlet.http.Cookie"%>
 <%@ include file="/template/header.jsp" %>
+<%
+String saveId = "";
+String ckId = "";
+Cookie cookies[] = request.getCookies();
+if(cookies != null){
+	for(Cookie cookie : cookies){
+		if("kid_inf".equals(cookie.getName())){
+			saveId = cookie.getValue();
+			ckId =  "checked";
+			break;
+		}
+	}
+}
+%>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -15,14 +29,14 @@ window.onload = function(){
 			alert("비밀번호를 입력하세요.");
 			return;
 		} else {
-			document.getElementById("loginform").action = "<%=root%>/user/loginprocess.jsp";
+			document.getElementById("loginform").action = "<%=root%>/user";
 			document.getElementById("loginform").submit();
 		}
-	}, false)
+	}, false);
 	
 	document.getElementById("moveRegisterBtn").addEventListener("click", function(e) {
 		document.location.href="<%=root%>/user/member.jsp";
-	}, false)
+	}, false);
 }
 </script>
 
@@ -30,9 +44,14 @@ window.onload = function(){
 	<div class="col-lg-6" align="center">
 		<h2>로그인</h2>
 		<form id="loginform" method="post" action="">
+			<input type="hidden" name="act" value="loginProcess">
+			<div class="form-group" align="right">
+				<label for="">
+				<input type="checkbox" class="form-control" name="idsave" value="idsave" placeholder="" <%=ckId%>>아이디</label>
+			</div>
 			<div class="form-group" align="left">
 				<label for="">아이디</label>
-				<input type="text" class="form-control" id="id" name="id" placeholder="">
+				<input type="text" class="form-control" id="id" name="id" placeholder="" value="<%=saveId%>">
 			</div>
 			<div class="form-group" align="left">
 				<label for="">비밀번호</label>
