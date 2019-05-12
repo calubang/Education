@@ -100,4 +100,57 @@ public class MemberController {
 		session.invalidate();
 		return "/user/login/login.jsp";
 	}
+
+	public String memberModify(HttpServletRequest request, HttpServletResponse response) {
+		String path = SiteConstance.SITE_MAIN;
+		int result = 0;
+		MemberDetailDto dto = new MemberDetailDto();
+		dto.setId(request.getParameter("id"));
+		dto.setName(request.getParameter("name"));
+		dto.setPass(request.getParameter("pass"));
+		dto.setEmailid(request.getParameter("emailid"));
+		dto.setEmaildomain(request.getParameter("emaildomain"));
+		dto.setTel1(request.getParameter("tel1"));
+		dto.setTel2(request.getParameter("tel2"));
+		dto.setTel3(request.getParameter("tel3"));
+		dto.setZipcode(request.getParameter("zipcode"));
+		dto.setAddress(request.getParameter("address"));
+		dto.setAddressDetail(request.getParameter("address_detail"));
+		result = MemberServiceImpl.getMemberService().modifyMember(dto);
+		if(result == 1) {
+			MemberDto memberDto = new MemberDto();
+			memberDto.setId(dto.getId());
+			memberDto.setName(dto.getName());
+			memberDto.setEmailid(dto.getEmailid());
+			memberDto.setEmaildomain(dto.getEmaildomain());
+			request.getSession().setAttribute("userInfo", dto);
+			
+			path = "/user/login/loginOK.jsp";
+		} else {
+			path = "/user?act=modifyFail.jsp";
+		}
+		return path;
+	}
+
+	public String passCheck(HttpServletRequest request, HttpServletResponse response) {
+		String path = SiteConstance.SITE_MAIN;
+		String pass = request.getParameter("pass");
+		String id = ((MemberDto)request.getSession().getAttribute("userInfo")).getId();
+		MemberDetailDto memberDetailDto = MemberServiceImpl.getMemberService().passCheck(id, pass);
+		if(memberDetailDto == null) {
+			request.setAttribute("passCheck", false);
+			path = "/user/member/passCheck.jsp";
+		} else {
+			request.setAttribute("userDetailInfo", memberDetailDto);
+			path = "/user/member/modify.jsp";
+		}
+		return path;
+	}
+
+	public String zipSearchWeb(HttpServletRequest request, HttpServletResponse response) {
+		//String searchAddress = request.getParameter("doro");
+		//StringBuffer resultXML = MemberServiceImpl.getMemberService().zipSearchWeb(searchAddress);
+		
+		return null;
+	}
 }

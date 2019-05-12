@@ -1,5 +1,13 @@
 package com.kitri.member.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.*;
 
 import com.kitri.member.dao.MemberDao;
@@ -70,12 +78,59 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int modifyMember(MemberDetailDto dto) {
-		return 0;
+		return MemberDaoImpl.getMemberDao().modifyMember(dto);
 	}
 
 	@Override
 	public int deleteMember(String id) {
 		return 0;
+	}
+
+	@Override
+	public MemberDetailDto passCheck(String id, String pass) {
+		return MemberDaoImpl.getMemberDao().passCheck(id, pass);
+	}
+
+	@Override
+	public StringBuffer zipSearchWeb(String searchAddress, int currentPage) {
+		String key = "g066YY%2F%2Fd4D1%2FKBNzd4UniRDi8znS%2B9CpbjpSk25vo4Luk%2BdPR7sn%2FYr0WDMx1uMOlOa5mEkAvQJ85tWVP0XKw%3D%3D";
+		int countPerPage = 50;
+		StringBuffer resultXML = new StringBuffer();
+		String apiUrl = "http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll?ServiceKey=g066YY%2F%2Fd4D1%2FKBNzd4UniRDi8znS%2B9CpbjpSk25vo4Luk%2BdPR7sn%2FYr0WDMx1uMOlOa5mEkAvQJ85tWVP0XKw%3D%3D"
+				+ "&countPerPage=" +  countPerPage 
+				+ "&currentPage=" + currentPage
+				+ "&srchwrd=";
+		
+		System.out.println(apiUrl + searchAddress);
+		BufferedReader in = null;
+		try {
+			URL url = new URL(apiUrl + URLEncoder.encode(searchAddress, "UTF-8"));
+			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+			String temp = null;
+			while(true) {
+				temp = in.readLine();
+				if(temp == null) {
+					break;
+				}
+				resultXML.append(temp);
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(in != null) {
+					in.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return resultXML;
 	}
 
 }

@@ -15,5 +15,7 @@ public interface MemberService {
 	public MemberDetailDto getMember(String id);
 	public int modifyMember(MemberDetailDto dto);
 	public int deleteMember(String id);
+	public MemberDetailDto passCheck(String id, String pass);
+	public StringBuffer zipSearchWeb(String searchAddress, int currentPage);
 
 }

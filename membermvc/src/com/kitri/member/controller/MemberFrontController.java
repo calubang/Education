@@ -62,6 +62,23 @@ public class MemberFrontController extends HttpServlet {
 			path = MemberController.getMemberController().logout(request, response);
 			MoveUrl.redirect(request, response, path);
 			break;
+		case "mvmodify":
+			MoveUrl.redirect(request, response, "/user/member/passCheck.jsp");
+			break;
+		case "passCheck":
+			path = MemberController.getMemberController().passCheck(request, response);
+			MoveUrl.forword(request, response, path);
+			break;
+		case "modify":
+			path = MemberController.getMemberController().memberModify(request, response);
+			MoveUrl.redirect(request, response, path);
+			break;
+		case "zipsearchWeb":
+			String searchAddress = request.getParameter("doro");
+			int currenPage = Integer.parseInt(request.getParameter("currentPage"));
+			StringBuffer resultXML = MemberServiceImpl.getMemberService().zipSearchWeb(searchAddress, currenPage);
+			sendXML(response, resultXML.toString());
+			break;
 		default:
 			break;
 		}
@@ -70,7 +87,7 @@ public class MemberFrontController extends HttpServlet {
 	private void sendXML(HttpServletResponse response, String xml) throws IOException {
 		response.setContentType("text/xml;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		//System.out.println(xml);
+		System.out.println(xml);
 		out.print(xml);
 	}
 

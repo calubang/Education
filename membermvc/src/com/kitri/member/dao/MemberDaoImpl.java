@@ -219,12 +219,141 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int modifyMember(MemberDetailDto dto) {
-		return 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			con = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			con.setAutoCommit(false);
+			
+			//member_detail 시작
+			sql.append("update MEMBER_DETAIL	\n");
+			sql.append("set	\n");
+			sql.append("	ZIPCODE = ?	\n");
+			sql.append("	, ADDRESS = ?	\n");
+			sql.append("	, ADDRESS_DETAIL = ?	\n");
+			sql.append("	, TEL1 = ?	\n");
+			sql.append("	, TEL2 = ?	\n");
+			sql.append("	, TEL3 = ?	\n");
+			sql.append("where	\n");
+			sql.append("	id = ?	\n");
+			pstmt = con.prepareStatement(sql.toString());
+			int index = 0;
+			pstmt.setString(++index, dto.getZipcode());
+			pstmt.setString(++index, dto.getAddress());
+			pstmt.setString(++index, dto.getAddressDetail());
+			pstmt.setString(++index, dto.getTel1());
+			pstmt.setString(++index, dto.getTel2());
+			pstmt.setString(++index, dto.getTel3());
+			pstmt.setString(++index, dto.getId());
+
+			result = pstmt.executeUpdate();
+			if(result != 1) {
+				return 0;
+			}
+			
+			pstmt.close();
+			sql.delete(0, sql.length());
+			
+			//member 시작
+			sql.append("update MEMBER       		\n");
+			sql.append("set       						\n");
+			sql.append("	name = ?       			\n");
+			sql.append("	, pass = ?       			\n");
+			sql.append("	, EMAILID = ?       		\n");
+			sql.append("	, EMAILDOMAIN = ?     \n");
+			sql.append("where        					\n");
+			sql.append("	id = ?       					\n");
+			
+			pstmt = con.prepareStatement(sql.toString());
+			index = 0;
+			pstmt.setString(++index, dto.getName());
+			pstmt.setString(++index, dto.getPass());
+			pstmt.setString(++index, dto.getEmailid());
+			pstmt.setString(++index, dto.getEmaildomain());
+			pstmt.setString(++index, dto.getId());
+			
+			result = pstmt.executeUpdate();
+			con.commit();
+			
+		} catch (SQLException e) {
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			
+			DBClose.close(con, pstmt);
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteMember(String id) {
 		return 0;
+	}
+
+	@Override
+	public MemberDetailDto passCheck(String id, String pass) {
+		MemberDetailDto memberDetailDto = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select	\n");
+			sql.append("	member.id	\n");
+			sql.append("	, member.name	\n");
+			sql.append("	, member.pass	\n");
+			sql.append("	, member.emailid	\n");
+			sql.append("	, member.emaildomain	\n");
+			sql.append("	, member.joindate	\n");
+			sql.append("	, member_detail.zipcode	\n");
+			sql.append("	, member_detail.address	\n");
+			sql.append("	, member_detail.address_detail	\n");
+			sql.append("	, member_detail.tel1	\n");
+			sql.append("	, member_detail.tel2	\n");
+			sql.append("	, member_detail.tel3	\n");
+			sql.append("from	\n");
+			sql.append("	member\n");
+			sql.append("	, MEMBER_DETAIL	\n");
+			sql.append("where \n");
+			sql.append("	member.id = MEMBER_DETAIL.ID	\n");
+			sql.append("	and member.id = ?	\n");
+			sql.append("	and member.pass = ?	\n");
+
+			pstmt = con.prepareStatement(sql.toString());
+			int index = 0;
+			pstmt.setString(++index, id);
+			pstmt.setString(++index, pass);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				memberDetailDto = new MemberDetailDto();
+				memberDetailDto.setId(rs.getString("id"));
+				memberDetailDto.setPass(rs.getString("pass"));
+				memberDetailDto.setName(rs.getString("name"));;
+				memberDetailDto.setEmailid(rs.getString("emailid"));
+				memberDetailDto.setEmaildomain(rs.getString("emaildomain"));
+				memberDetailDto.setJoindate(rs.getString("joindate"));
+				memberDetailDto.setZipcode(rs.getString("zipcode"));
+				memberDetailDto.setAddress(rs.getString("address"));
+				memberDetailDto.setAddressDetail(rs.getString("address_detail"));
+				memberDetailDto.setTel1(rs.getString("tel1"));
+				memberDetailDto.setTel2(rs.getString("tel2"));
+				memberDetailDto.setTel3(rs.getString("tel3"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}
+		return memberDetailDto;
 	}
 
 }
