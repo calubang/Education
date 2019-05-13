@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<title>Select HTML</title>
+<style type="text/css">
+div:nth-of-type(2), div:nth-of-type(3){
+	display: none;
+}
+</style>
+<script type="text/javascript">
+$(function() {
+	$("div:nth-of-type(1) select").change(function() {
+		//선택된 객체의 value 속성값 얻기
+		var $carName = $(this).val();
+		var $engine = $("div:nth-of-type(2)");
+		//var $engineSelect = $engine.children("select");
+		//var $engineSelect = $engine.find("select");
+		var data = "<select>";
+		if($carName == '소나타'){
+			data += "<option>Smartstream G2.0</option>";
+		} else if($carName == '펠리세이드'){
+			data += "<option>가솔린 3.8</option>";
+			data += "<option>디젤 2.2</option>";
+		} else{
+			$engine.empty();
+			$engine.hide();
+			return;
+		}
+		data += "</select>";
+		$engine.html(data);
+		$engine.show();
+	});
+	
+	//동적개체에 대해서는 처리해줄수가 없다..
+	/* $engine = $("div:nth-of-type(2) select");
+	$engine.click(function() {
+		alert($engine.val());
+	}); */
+	//향후 추가될 DOM객체의 이벤트 핸들러 등록방법 : on()
+	$("div:nth-of-type(2)").on("click", "select",  function() {
+		alert($(this).val());
+	});
+});
+</script>
+</head>
+<body>
+<div>
+	<!-- 자동차 종류 -->
+	<select>
+		<option>선택하세요</option>
+		<option>소나타</option>
+		<option>펠리세이드</option>
+	</select>
+</div>
+
+<div>
+	<!-- 엔진 종류 
+	<select>
+	</select>-->
+</div>
+
+<div>
+	<!-- 바디 타입 -->
+	<select>
+	</select>
+</div>
+</body>
+</html>

@@ -100,8 +100,8 @@ public class MemberServiceImpl implements MemberService {
 				+ "&countPerPage=" +  countPerPage 
 				+ "&currentPage=" + currentPage
 				+ "&srchwrd=";
-		
-		System.out.println(apiUrl + searchAddress);
+
+		//System.out.println(apiUrl + searchAddress);
 		BufferedReader in = null;
 		try {
 			URL url = new URL(apiUrl + URLEncoder.encode(searchAddress, "UTF-8"));

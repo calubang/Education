@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Form HTML Test</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	var $form = $("form");
+	$form.submit(function() {
+		var $t = $("input[name=t]");
+		if( $t.val().trim().length == 0){
+			alert("반드시 입력하세요!");
+			 $t.focus();
+			 return false;
+		} else{
+			$form.attr("action", "http://www.naver.com");
+			$form.attr("method", "post");
+		}
+	});
+});
+/* window.addEventListener("load", function(){
+	var submit = document.querySelector("input[type=submit]");
+	
+	submit.addEventListener("click", function(e) {
+		alert("클릭되었습니다.");
+	}, false);
+	
+	var form = document.querySelector("form");
+	
+	form.addEventListener("submit", function(e) {
+		//input 객체중 name속성이 t인 객체찾기
+		var t = document.querySelector("input[name=t]");
+		if(t.value.trim().length == 0){
+			alert("반드시 입력하세요.");
+			t.focus();
+			e.preventDefault();
+		} else{
+			alert("전송되었습니다.");	
+		}
+	}, false);
+}); */
+</script>
+</head>
+<body>
+<form action="http://www.google.com">
+	<input name="t"><br>
+	<input type="password" name="p"><br>
+	<input type="checkbox" name="c" value="1">원&nbsp;&nbsp;
+	<input type="checkbox" name="c" value="2">투&nbsp;&nbsp;
+	<input type="checkbox" name="c" value="3">쓰리<br>
+	<select name="s">
+		<option value="1">원</option>
+		<option value="2">투</option>
+		<option value="3">쓰리</option>
+	</select>
+	<input type="submit" value="전송1">
+	<input type="button" value="버튼1">
+	<button>전송2</button>
+</form>
+<button>버튼2</button>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	var chkArr = $("div>input[type=checkbox]");
+	var $allCheck = $(chkArr[0]);
+	$allCheck.change(function() {
+		//이런거 없음.. checked 의 특수성
+		//$(chkArr).attr("checked", $allCheck.attr("checked"));
+		$(chkArr).prop("checked", $allCheck.prop("checked"));
+	});
+});
+window.onload = function() {
+	var allCheck = document.getElementById("allCheck");
+	
+	allCheck.addEventListener("change", function(e) {
+		var checkes = document.getElementsByName("check");
+		for(var i=0; i<checkes.length; i++){
+			checkes[i].checked = allCheck.checked;
+		}
+		
+	}, false);
+} 
+</script>
+<body>
+<div id = "allDiv">
+	<input type="checkbox" id="allCheck" value="all" >ALL
+</div>
+<div id = "checkDiv">
+	<input type="checkbox" checked value="1" name="check">ONE&nbsp;&nbsp;
+	<input type="checkbox" value="2" name="check">TWO&nbsp;&nbsp;
+	<input type="checkbox" value="3" name="check">THREE&nbsp;&nbsp;
+</div>
+</body>
+</html>
