@@ -2864,8 +2864,12 @@ a {
   text-decoration: none;
 }
 
+.sidebar-list-item>a{
+	color: white;
+}
+
 a:hover, a:focus {
-  color: #004ef9;
+  color: white;
   text-decoration: underline;
 }
 
@@ -4205,7 +4209,7 @@ code {
     margin: auto;
 }
 #profile{
-	margin-top: 7rem;
+	margin-top: 10%;
 	background: url("img/profile.jpg") no-repeat center top;
 	width: 10rem;
 	height: 10rem;
@@ -4243,4 +4247,7 @@ code {
 
 #mainSection>.w-100{
 	margin-top: 20%;
+}
+#toggle{
+	margin-left: 5%;
 }

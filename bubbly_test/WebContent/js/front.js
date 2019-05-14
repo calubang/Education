@@ -6,6 +6,26 @@ $(function () {
     // ------------------------------------------------------ //
     $('.sidebar-toggler').on('click', function () {
         $('.sidebar').toggleClass('shrink show');
+        var className = $('#sidebar').attr("class");
+        var sidebarWidth = parseInt($("#sidebar").css("width"));
+    	var marginLeftSideBar = parseInt($("#sidebar").css("margin-left"));
+    	var length = sidebarWidth + marginLeftSideBar;
+    	var contentsWidth = parseInt($("#contents").css("width"));
+
+    	if(className.indexOf("show")>0 && contentsWidth > 1200){
+    		//큰화면에서 메뉴바 줄이기
+    		$("#contents").css("margin-left", "6rem");
+    	} else if(className.indexOf("show")>0 && contentsWidth < 1200){
+    		//작은화면에서 메뉴바없애기
+    		$("#contents").css("margin-left", "6rem");
+    	} else if(className.indexOf("show")<0 && contentsWidth > 1200){
+    		//큰화면에서 메뉴바 늘리기
+    		$("#contents").css("margin-left", "20rem");
+    	} else if(className.indexOf("show")<0 && contentsWidth < 1200){
+    		//작은화면에서 메뉴바 보이기	
+    		$("#contents").css("margin-left", 0);
+    	} 
+        
     });
 
 

@@ -28,6 +28,9 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 <!-- font -->
 <link href="font/font.css" rel="stylesheet" type="text/css">
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <style type="text/css">
 body {
 	font-family: BMJUA !important;
