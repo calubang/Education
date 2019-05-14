@@ -26,6 +26,7 @@ public class MemberFrontController extends HttpServlet {
 		String act = request.getParameter("act");
 		String path = "/index.jsp";
 		String result = "";
+		//
 		if(act == null) {
 			//에러코드 삽입
 			return;

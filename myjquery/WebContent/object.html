@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+var person = {
+	name : "안병욱"
+	, gender : "남"
+	, address : "광명"
+	, walk : function(){
+		console.log(name + "이 두발로 걷는다");  //일반 지역변수 name을 찾지만 그런게 없기에 나오지 않음
+		console.log(this.name + "이 두발로 걷는다");  //자신의 객체안의 name을 정확히 접근
+	}
+};
+
+console.log(person.name);
+person.walk();
+</script>
+</head>
+<body>
+
+</body>
+</html>

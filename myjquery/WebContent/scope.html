@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Scope.HTML</title>
+<script type="text/javascript">
+var a;
+console.log(typeof(a));   //undefined
+console.log(a+1);   //NaN
+
+var a = 10;			// 기존의 a를 덮어씌워 버린다.
+console.log(a);		// a = 10
+
+var b = function() {
+	var lv = "hello";
+	gv = "global";
+	for(var i=0 ; i<10 ; i++){
+		console.log(i + ", " + lv);
+	}
+	console.log("in function lv = "+ lv);		//in function lv = hello
+	console.log("in function i = "+ i);			//in function i = 10
+	console.log("in function gv = "+ gv);	//in function gv = global
+}
+console.log(typeof(b));	//function
+console.log(b);				//ƒ () {
+									//	var lv = "hello";
+									//		for(var i=0 ; i<10 ; i++){
+									//			console.log(i + ", " + lv);
+									//		}
+									//	}
+b();								//b function호출
+//console.log("out function lv= " + lv);	//errror : Uncaught ReferenceError: lv is not defined
+console.log("out function gv= " + gv);	//out function gv= global
+</script>
+<script type="text/javascript">
+window.addEventListener("load", function(e) {
+	var buttonArr = document.querySelectorAll("button");
+
+	for(var i=0 ; i<buttonArr.length ; i++){
+		var button = buttonArr[i];
+		
+		btnClick(i, button);
+	}
+});
+
+function btnClick(j, button){
+	button.addEventListener("click", function () {
+		var inputA = document.querySelector("input[name=a]");
+		var inputB = document.querySelector("input[name=b]");
+		var inputResult = document.querySelector("input[name=c]");
+		var aNum = parseInt(inputA.value);
+		var bNum = parseInt(inputB.value);
+		switch(j){
+		case 0:
+			inputResult.value = aNum + bNum;
+			break;
+		case 1:
+			inputResult.value = aNum - bNum;
+			break;
+		case 2:
+			inputResult.value = aNum * bNum;
+			break;
+		case 3:
+			inputResult.value = aNum / bNum;
+			break;
+		}
+	});
+}
+
+</script>
+</head>
+<body>
+<input type="text" name="a">
+<input type="text" name="b">
+<button>+</button>
+<button>-</button>
+<button>*</button>
+<button>/</button>
+<input type="text" name="c" readonly="readonly">
+
+</body>
+</html>

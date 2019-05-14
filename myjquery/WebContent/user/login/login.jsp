@@ -39,7 +39,6 @@ window.onload = function(){
 	}, false);
 }
 </script>
-
 <div class="container" align="center">
 	<div class="col-lg-6" align="center">
 		<h2>로그인</h2>
@@ -64,5 +63,4 @@ window.onload = function(){
 		</form>
 	</div>
 </div>
-
 <%@ include file="/template/footer.jsp" %>

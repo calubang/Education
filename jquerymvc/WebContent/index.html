@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Semantic HTML</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	//dom트리에서 nav>ul>li>a 객체를 찾기
+	var $aTags = $("nav>ul>li>a");
+	$aTags.click(function() {
+		var vurl = $(this).attr("href");
+
+		$.ajax({
+			url : vurl
+			, method : "get"
+			, success : function(result) {
+				//응답 받았을 때
+				$("section").html(result);
+			}
+			
+		});
+		return false;
+	});
+});
+</script>
+<style type="text/css">
+*{
+	box-sizing: border-box;
+}
+a{
+	text-decoration: none;
+}
+header{
+	background: url("http://www.kitri.re.kr/static/images/kitri/common/h_logo.png") no-repeat center top;
+}
+nav>ul{
+	list-style: none;
+	display: block;
+    padding-left: 5%;
+    margin-right: 5%;
+    background-color: tomato;
+    height: 100px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    padding-top: 35px;
+}
+nav>ul>li{
+	display: inline-block;
+}
+footer{
+	height: 100px;
+	display: block;
+	font-weight: bold;
+	position: fixed;
+	bottom: 0px;
+	background-color: gray;
+	text-align: center;
+	width: 100%;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>HEADER My Web</h1>
+</header>
+<nav>
+	<ul>
+		<li><a href="index.html">홈으로</a></li>
+		<li><a href="login.jsp">로그인</a></li>
+		<li><a href="user/member.html">가입</a></li>
+	</ul>
+</nav>
+<section>본문</section>
+<footer>사업자 : KITRI(주) | 대표 : 안병욱</footer>
+</body>
+</html>
