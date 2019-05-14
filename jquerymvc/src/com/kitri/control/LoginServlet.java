@@ -24,6 +24,7 @@ public class LoginServlet extends HttpServlet {
 		if("login".equals(act)) {
 			String id = request.getParameter("id");
 			String pass = request.getParameter("pass");
+			System.out.println(id + "//" + pass);
 			result = CustomerService.login(id, pass);
 			
 			request.setAttribute("loginResult", result);

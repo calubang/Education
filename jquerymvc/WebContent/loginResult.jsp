@@ -3,3 +3,5 @@
 <%
 String result = (String)request.getAttribute("loginResult");
 %>
+<%=result%>
+
