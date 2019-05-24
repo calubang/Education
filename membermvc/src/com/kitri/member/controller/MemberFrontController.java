@@ -88,7 +88,7 @@ public class MemberFrontController extends HttpServlet {
 	private void sendXML(HttpServletResponse response, String xml) throws IOException {
 		response.setContentType("text/xml;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		//System.out.println(xml);
+		System.out.println(xml);
 		out.print(xml);
 	}
 

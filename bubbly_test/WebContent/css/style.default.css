@@ -1268,6 +1268,8 @@ button {
   box-shadow: 0 0.125rem 0.8rem rgba(0, 0, 0, 0.1);
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
+	position: fixed;
+	height: 100%;
 }
 
 .sidebar.shrink {
@@ -4250,4 +4252,12 @@ code {
 }
 #toggle{
 	margin-left: 5%;
+}
+.header{
+	position: fixed;
+	width: 100%;
+	display: none;
+	z-index: 1000;
+}
+#document{
 }

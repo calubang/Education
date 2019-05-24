@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+var score=0;
+$(function() {
+	stars = $("img[name=star]");
+	
+	$("#scoreSet").click(function() {
+		var $data = $("form").serialize();
+		$.ajax({
+			url : "score.jsp"
+			, method : "get"
+			, data : {
+				score : score
+			}
+			, success : function(result){
+				$("#divResult").html(result);
+			}
+		});
+	});
+	
+	$.each(stars, function(index, element) {
+		$(element).click(function() {
+			for(var i=0 ; i<index+1; i++){
+				$(stars[i]).prop("src", "img/starcolor.jpg");			
+			}
+			for(i = index+1 ; i<stars.length ; i++){
+				$(stars[i]).prop("src", "img/star.png");	
+			}
+		});
+	});
+});
+</script>
+</head>
+<body>
+<div>
+	<img src="img/doEndgame.jpg" style="width:200px; height:200px">
+</div>
+<div>
+	<img src="img/star.png" name="star" style="width: 50px; height: 50px">
+	<img src="img/star.png" name="star" style="width: 50px; height: 50px">
+	<img src="img/star.png" name="star" style="width: 50px; height: 50px">
+	<img src="img/star.png" name="star" style="width: 50px; height: 50px">
+	<img src="img/star.png" name="star" style="width: 50px; height: 50px">
+</div>
+<button id="scoreSet" class="btn btn-primary">별점주기</button>
+<div id="divResult">
+</div>
+</body>
+</html>

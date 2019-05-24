@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 
+	String zipSearchRoot = request.getContextPath();
+%>
 <script type="text/javascript">
 $(document).ready(function() {
 	 
@@ -21,7 +24,7 @@ function zipSearch() {
 		return;
 	} else{
 		var params = "act=zipsearch&doro="+doro;
-		sendRequest("<%=root%>/user", params, zipsearchResult, "GET");
+		sendRequest("<%=zipSearchRoot%>/user", params, zipsearchResult, "GET");
 	}
 }
 

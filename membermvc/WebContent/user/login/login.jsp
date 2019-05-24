@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" import="javax.servlet.http.Cookie"%>
 <%
 String root = request.getContextPath();
+//   /membermvc
 %>
 <!DOCTYPE html>
 <html lang="ko">

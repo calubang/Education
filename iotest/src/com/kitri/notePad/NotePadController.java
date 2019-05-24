@@ -20,17 +20,7 @@ public class NotePadController implements ActionListener{
 		JMenuItem item = (JMenuItem)e.getSource();
 		String text = item.getText();
 		switch (text) {
-		case "새로 만들기":
-			notePadService.clear();
-			break;
-		case "저장":
-			notePadService.save();
-			break;
-		case "열기":
-			notePadService.open();
-			break;
-		case "끝내기":
-			break;
+
 		default:
 			break;
 		}

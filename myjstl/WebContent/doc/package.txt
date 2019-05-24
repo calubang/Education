@@ -1,0 +1,66 @@
+com.kitri.dto
+	1. ProductCategory : 풀네임
+	2. 변수는 동일하게
+	3. 생성자
+	4. getter, setter
+	
+- product 안의 prod_cate는 ProductCategory를 has a 관계로 구현
+
+기능
+- 검색
+	- 전체상품목록 
+		- 카테고리번호로 오름차순 정렬
+		-- 전체 상품목록 조회
+		select 
+		    cate.cate_no
+		    , cate.cate_name
+		    , prod.prod_no
+		    , prod.prod_name
+		    , prod.prod_price
+		    , prod.prod_detail
+		from 
+		    product prod 
+		    inner join product_category cate
+		        on prod.prod_cate = cate.cate_no
+		order by 
+		    cate_no
+		    , prod_name
+		;
+	- id별 조회
+		-- id로 검색하기
+		select
+		    prod.prod_no
+		    , prod.prod_cate
+		    , prod.prod_name
+		    , prod.prod_price
+		    , prod.prod_detail
+		    , cate.cate_no
+		    , cate.cate_name
+		from
+		    product prod
+		    inner join product_category cate
+		        on prod.prod_cate = cate.cate_no
+		where 
+		    prod_no = '00001'
+		;
+
+	- 카테고리별 검색
+		-- 카테고리별 조회
+		select 
+		    cate.cate_no
+		    , cate.cate_name
+		    , prod.prod_no
+		    , prod.prod_name
+		    , prod.prod_price
+		    , prod.prod_detail
+		from 
+		    product prod 
+		    inner join product_category cate
+		        on prod.prod_cate = cate.cate_no
+		where 
+		    upper(cate.cate_no) = upper('D')
+		order by 
+		    cate_no
+		    , prod_name
+		;
+	

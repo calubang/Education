@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script type="text/javascript" src="<%=root%>/js/httpRequest.js"></script>
+<% 
+	String zipSearchWebRoot = request.getContextPath();
+%>
+<script type="text/javascript" src="<%=zipSearchWebRoot%>/js/httpRequest.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	 
@@ -17,7 +20,7 @@ var zipListView;
 
 function zipSearchAjax(doro, currentPage) {
 	$.ajax({
-		url: "<%=root%>/user"
+		url: "<%=zipSearchWebRoot%>/user"
 		, type:"get"
 		, dataType:"xml"
 		, data : "act=zipsearchWeb&doro="+doro + "&currentPage=" + currentPage
