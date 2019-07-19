@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kitri.dto.Product;
 import com.kitri.service.ProductService;
 import com.kitri.util.MoveUrl;
@@ -32,6 +33,11 @@ public class ViewCartServlet extends HttpServlet {
 		//상품에 대한 정보를 실시간으로 받아온다
 		//보안상의 문제도 있음. 누군가가 상품가격을 바꾼채로 서버에 데이터를 요청시켜버린다면?? 여러가지로 문제가된다
 		//db에서 받아온 product를 다시 session의 cart 에 담아준다.
+		//안드로이드 확인용 코드
+		String userAgent = request.getHeader("User-Agent");
+		//System.out.println(userAgent);
+		
+		
 		HttpSession session = request.getSession();
 		String path = "index.jsp";
 		
@@ -45,16 +51,16 @@ public class ViewCartServlet extends HttpServlet {
 				dataCart.put(dataProduct, quantity);
 			}
 			request.setAttribute("dataCart", dataCart);
-			
 		}else {
 			//카트가 아직 없으면?
 		}
 		path = "viewcartresult.jsp";
-		MoveUrl.forword(request, response, path);
+		//안드로이드 응답페이지
+		if(userAgent.contains("Android")) {
+			path = "viewcartresultjson.jsp";
+		}
 		
-		
-		
-		
+		MoveUrl.forword(request, response, path);		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

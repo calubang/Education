@@ -3,14 +3,12 @@ package com.kitri.dto;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import org.json.JSONObject;
-
 public class Product implements Comparator<Product>, Serializable{
 	//DB PRODUCT 와 연결
 	private String prod_no;
 	private ProductCategory productCategory;
 	private String prod_name;
-	private int prod_price;
+	transient private int prod_price;
 	private String prod_detail;
 	
 	public Product() {
@@ -48,9 +46,8 @@ public class Product implements Comparator<Product>, Serializable{
 	}
 	@Override
 	public String toString() {
-		 return "Product [prod_no=" + prod_no + ", productCategory=" + productCategory
-		 + ", prod_name=" + prod_name + ", prod_price=" + prod_price +
-		 ", prod_detail=" + prod_detail + "]";
+		return "Product [prod_no=" + prod_no + ", productCategory=" + productCategory + ", prod_name=" + prod_name
+				+ ", prod_price=" + prod_price + ", prod_detail=" + prod_detail + "]";
 	}
 	
 	@Override

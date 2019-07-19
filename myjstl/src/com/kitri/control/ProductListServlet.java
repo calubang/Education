@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kitri.dto.Product;
 import com.kitri.service.ProductService;
 import com.kitri.util.MoveUrl;
@@ -26,8 +27,9 @@ public class ProductListServlet extends HttpServlet {
     
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//System.out.println("product 받으러 왔다.");
+		System.out.println("product 받으러 왔다.");
 		String act = request.getParameter("act");
+		List<Product> list = null;
 		
 		String path = "index.jsp";
 		if(act == null) {
@@ -37,12 +39,19 @@ public class ProductListServlet extends HttpServlet {
 		
 		switch (act) {
 		case "productAll":
-			List<Product> list = service.findAll();
+			list = service.findAll();
 			request.setAttribute("productList", list);
 			path = "/productlistresult.jsp";
 			MoveUrl.forword(request, response, path);
 			break;
-
+		case "productAllJSON":
+			list = service.findAll();
+			//request.setAttribute("productList", list);
+			ObjectMapper mapper = new ObjectMapper();
+			request.setAttribute("productListJSON", mapper.writeValueAsString(list));
+			path = "/productlistresultJSON.jsp";
+			MoveUrl.forword(request, response, path);
+			break;
 		default:
 			break;
 		}

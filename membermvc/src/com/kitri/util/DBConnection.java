@@ -2,6 +2,9 @@ package com.kitri.util;
 
 import java.sql.*;
 
+import javax.naming.*;
+import javax.sql.DataSource;
+
 public class DBConnection {
 	
 	static {
@@ -13,6 +16,16 @@ public class DBConnection {
 	}
 	
 	public static Connection makeConnection() throws SQLException {
-		return DriverManager.getConnection(SiteConstance.DB_URL, SiteConstance.DB_USERNAME, SiteConstance.DB_PASSWORD);
+		DataSource ds = null;
+		try {
+			Context ictx = new InitialContext();
+			Context ctx = (Context)ictx.lookup("java:comp/env");
+			ds = (DataSource)ctx.lookup("jdbc/kitri");
+			
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		
+		return ds.getConnection();
 	}
 }

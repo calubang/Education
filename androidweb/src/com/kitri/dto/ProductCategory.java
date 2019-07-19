@@ -1,8 +1,6 @@
 package com.kitri.dto;
 
-import java.io.Serializable;
-
-public class ProductCategory implements Serializable{
+public class ProductCategory {
 	//DB의 PRODUCT_CATEGORY 와 연결
 	private String cate_no;
 	private String cate_name;

@@ -30,6 +30,8 @@ public class AddCartServlet extends HttpServlet {
 		String quantityStr = request.getParameter("quantity");
 		int quantity = Integer.parseInt(quantityStr);
 		
+		//System.out.println(prodNo + "//" + quantityStr);
+		
 		HttpSession session = request.getSession();
 		Map<Product, Integer> cart = (Map<Product, Integer>)session.getAttribute("cart");
 		if(cart == null) {
@@ -55,6 +57,7 @@ public class AddCartServlet extends HttpServlet {
 		 * ",   수량 : " + cart.get(key)); }
 		 */
 		
+		System.out.println(cart);
 		MoveUrl.forword(request, response, "/addcart.jsp");
 		
 		//질문할거 : 서블릿을 계속 만드는게 나은가?
